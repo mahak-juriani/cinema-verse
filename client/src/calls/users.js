@@ -1,4 +1,4 @@
-const {axiosInstance} = require('./index')
+const {axiosInstance, resetAxiosInstance} = require('./index')
 
 //Register new User
 
@@ -17,6 +17,7 @@ export const RegisterUser = async (value) => {
 export const LoginUser = async (value) =>{
     try {
         const response = await axiosInstance.post("api/users/login", value);
+        resetAxiosInstance()
         return response.data
     } catch (error) {
         console.log(error);

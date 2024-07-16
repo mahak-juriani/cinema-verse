@@ -23,6 +23,10 @@ function ProtectedRoute({ children }) {
     {
       label: "Home",
       icon: <HomeOutlined />,
+      onClick: ()=>{
+        navigate("/")
+      },
+      key: "home"
     },
 
     {
@@ -46,6 +50,7 @@ function ProtectedRoute({ children }) {
             </span>
           ),
           icon: <ProfileOutlined />,
+          key: "profile"
         },
 
         {
@@ -60,6 +65,7 @@ function ProtectedRoute({ children }) {
             </Link>
           ),
           icon: <LogoutOutlined />,
+          key: "logout"
         },
       ],
     },

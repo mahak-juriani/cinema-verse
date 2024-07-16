@@ -3,6 +3,7 @@ const Theatre = require('../models/theatreModel');
 
 router.post('/add-theatre',  async (req, res) => {
     try{
+        // TODO: get User role - role user not allowed
         const newTheatre = new Theatre(req.body);
         await newTheatre.save();
         res.send({

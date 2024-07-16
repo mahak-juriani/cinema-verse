@@ -3,10 +3,14 @@ import { useNavigate, useParams } from "react-router-dom";
 import { getMovieById } from "../calls/movies";
 import { useDispatch } from "react-redux";
 import { hideLoading, showLoading } from "../redux/loaderSlice";
-import { message, Input, Divider, Row, Col } from "antd";
+import { message, DatePicker, Input, Divider, Row, Col } from "antd";
+import dayjs from "dayjs";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { CalendarOutlined } from "@ant-design/icons";
 import moment from "moment";
 import { getAllTheatresByMovie } from "../calls/shows";
+
+dayjs.extend(customParseFormat);
 
 const SingleMovie = () => {
   const params = useParams();
@@ -16,8 +20,9 @@ const SingleMovie = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleDate = (e) => {
-    setDate(moment(e.target.value).format("YYYY-MM-DD"));
-    navigate(`/movie/${params.id}?date=${e.target.value}`);
+    let date = moment(e.$d).format("YYYY-MM-DD")
+    setDate(date);
+    navigate(`/movie/${params.id}?date=${date}`);
   };
 
   const getData = async () => {
@@ -79,7 +84,7 @@ const SingleMovie = () => {
               </p>
               <p className="movie-data">
                 Release Date:{" "}
-                <span>{moment(movie.date).format("MMM Do YYYY")}</span>
+                <span>{moment(movie.releaseDate).format("MMM Do YYYY")}</span>
               </p>
               <p className="movie-data">
                 Duration: <span>{movie.duration} Minutes</span>
@@ -88,13 +93,12 @@ const SingleMovie = () => {
 
               <div className="d-flex flex-column-mob align-items-center mt-3">
                 <label className="me-3 flex-shrink-0">Choose the date:</label>
-                <Input
+                <DatePicker
                   onChange={handleDate}
-                  type="date"
+                  minDate={dayjs(moment())}
                   className="max-width-300 mt-8px-mob"
-                  value={date}
-                  placeholder="default size"
-                  prefix={<CalendarOutlined />}
+                  value={dayjs(date)}
+                  placeholder="select date"
                 />
               </div>
             </div>

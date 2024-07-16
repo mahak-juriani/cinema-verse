@@ -28,7 +28,7 @@ router.post("/register", async (req, res) => {
     console.log(hashPwd);
     req.body.password = hashPwd;
     
-
+    
     const newUser = await User(req.body);
     await newUser.save();
     // console.log(newUser);
@@ -82,8 +82,7 @@ router.post("/login", async (req, res) => {
 
 router.get("/get-current-user", authMiddleware, async (req, res) => {
   const user = await User.findById(req.body.userId).select("-password");
-
-  res.send({
+  return res.send({
     success: true,
     message: 'You are authorized to go to the protected route!',
     data: user

@@ -13,6 +13,7 @@ export const makePayment = async (token, amount) => {
 export const bookShow = async (payload) => {
     try{
         const response = await axiosInstance.post('/api/bookings/book-show', payload);
+        // TODO: On booking, update show->bookedSeats
         console.log(response.data);
         return response.data;
     }catch(err){
